@@ -9,5 +9,7 @@ export const topics = async (req: Request, res: Response) => {
 
   console.log(topics);
 
-  res.render("clients/pages/topics/index");
+  res.render("clients/pages/topics/index", {
+    pageTitle:"Chủ đề bài hát"
+  });
 };

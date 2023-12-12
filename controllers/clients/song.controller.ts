@@ -62,7 +62,7 @@ export const detail = async (req: Request, res: Response) => {
         pageTitle: "Chi tiết bài hát",
         song: song,
         singer: singer,
-        
+        topic: topic
     });
 };
 

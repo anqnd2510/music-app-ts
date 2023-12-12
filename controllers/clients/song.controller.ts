@@ -50,14 +50,14 @@ export const detail = async (req: Request, res: Response) => {
         _id: song.topicId,
         deleted: false
     }).select("title");
-  
+
     const favoriteSong = await FavoriteSong.findOne({
       // userId: "",
         songId: song.id
     });
-  
+
     song["isFavoriteSong"] = favoriteSong ? true : false;
-  
+
     res.render("clients/pages/songs/detail", {
         pageTitle: "Chi tiết bài hát",
         song: song,
@@ -97,29 +97,29 @@ export const like =async (req: Request, res: Response) => {
 export const favorite = async (req: Request, res: Response) => {
     const idSong: string = req.params.idSong;
     const typeFavorite: string = req.params.typeFavorite;
-  
+
     switch (typeFavorite) {
-      case "favorite":
+        case "favorite":
         const existFavoriteSong = await FavoriteSong.findOne({
-          songId: idSong
+            songId: idSong
         });
         if(!existFavoriteSong) {
-          const record = new FavoriteSong({
+        const record = new FavoriteSong({
             // userId: "",
             songId: idSong
-          });
-          await record.save();
+        });
+        await record.save();
         }
         break;
-      case "unfavorite":
+    case "unfavorite":
         await FavoriteSong.deleteOne({
-          songId: idSong
+        songId: idSong
         });
         break;
-      default:
+    default:
         break;
     }
-  
+
     res.json({
         code: 200,
         message: "Thành công!"

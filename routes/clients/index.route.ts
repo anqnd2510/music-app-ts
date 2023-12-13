@@ -4,6 +4,7 @@ import { songRoutes } from "./song.route";
 import { favoriteSongRoutes } from "./favorite-song.route";
 import { searchRoutes } from "./search.route";
 
+
 const clientRoutes = (app: Express): void => {
 
     app.use(`/topics`, topicRoutes);

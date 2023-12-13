@@ -45,7 +45,7 @@ export const result = async (req: Request, res: Response) => {
 
   switch (type) {
     case "result":
-    res.render("client/pages/search/result", {
+    res.render("clients/pages/search/result", {
         pageTitle: `Kết quả: ${keyword}`,
         keyword: keyword,
         songs: newSongs

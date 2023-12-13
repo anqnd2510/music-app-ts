@@ -36,34 +36,46 @@ export const list =async (req: Request, res: Response) => {
 
 // [GET] /songs/detail/:slugSong
 export const detail = async (req: Request, res: Response) => {
-    const slugSong: string = req.params.slugSong;
-    const song = await Song.findOne({
-        slug: slugSong,
-        status: "active",
-        deleted: false
-    });
-    const singer = await Singer.findOne({
-        _id: song.singerId,
-        deleted: false
-    }).select("fullName");
-    const topic = await Topic.findOne({
-        _id: song.topicId,
-        deleted: false
-    }).select("title");
+    try {
+        const slugSong: string = req.params.slugSong;
+        const song = await Song.findOne({
+            slug: slugSong,
+            status: "active",
+            deleted: false
+        });
 
-    const favoriteSong = await FavoriteSong.findOne({
-      // userId: "",
-        songId: song.id
-    });
+        if (!song) {
+            // Handle the case where the song is not found
+            return res.status(404).send("Song not found");
+        }
 
-    song["isFavoriteSong"] = favoriteSong ? true : false;
+        const singer = await Singer.findOne({
+            _id: song.singerId,
+            deleted: false
+        }).select("fullName");
 
-    res.render("clients/pages/songs/detail", {
-        pageTitle: "Chi tiết bài hát",
-        song: song,
-        singer: singer,
-        topic: topic
-    });
+        const topic = await Topic.findOne({
+            _id: song.topicId,
+            deleted: false
+        }).select("title");
+
+        const favoriteSong = await FavoriteSong.findOne({
+            songId: song.id
+        });
+
+        song["isFavoriteSong"] = favoriteSong ? true : false;
+
+        res.render("clients/pages/songs/detail", {
+            pageTitle: "Chi tiết bài hát",
+            song: song,
+            singer: singer,
+            topic: topic
+        });
+    } catch (error) {
+        // Handle other errors that might occur during the process
+        console.error(error);
+        res.status(500).send("Internal Server Error");
+    }
 };
 
 // [PATCH] /songs/like/:typeLike/:idSong

@@ -1,13 +1,12 @@
-
 import mongoose from "mongoose";
 
 const favoriteSongSchema = new mongoose.Schema(
-{
-    userId: String,
-    songId: String,
-deleted: {
-    type: Boolean,
-    default: false,
+    {
+        userId: String,
+        songId: String,
+        deleted: {
+        type: Boolean,
+        default: false,
     },
     deletedAt: Date,
 },

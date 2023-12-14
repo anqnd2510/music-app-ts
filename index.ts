@@ -1,6 +1,7 @@
 import express, { Express } from "express";
 import dotenv from "dotenv";
 import path from "path";
+import bodyParser from "body-parser";
 import * as database from "./config/database";
 
 import adminRoutes from "./routes/admins/index.route";
@@ -14,7 +15,14 @@ database.connect();
 const app: Express = express();
 const port: number | string = process.env.PORT || 3000;
 
+
+// app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+
+
 app.use(express.static("public"));
+
 app.set("views", "./views");
 app.set("view engine", "pug");
 

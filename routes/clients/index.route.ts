@@ -7,9 +7,9 @@ import { dashboardRoutes } from "./dashboard.route";
 
 
 const clientRoutes = (app: Express): void => {
-
-    app.use(`/`, dashboardRoutes)
     
+    app.use(`/`, dashboardRoutes)
+
     app.use(`/topics`, topicRoutes);
 
     app.use(`/songs`, songRoutes);
@@ -18,7 +18,6 @@ const clientRoutes = (app: Express): void => {
     
     app.use(`/search`, searchRoutes);
 
-    
 };
 
 export default clientRoutes;

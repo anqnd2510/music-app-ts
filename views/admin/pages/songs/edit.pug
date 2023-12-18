@@ -4,7 +4,7 @@ block main
     h1(class= "mb-4") #{pageTitle}
 
     form(
-        action=`/${prefixAdmin}/songs/create`
+        action=`/${prefixAdmin}/songs/edit/${song.id}?_method=PATCH`
         method="POST"
         enctype="multipart/form-data"
     )
@@ -16,6 +16,7 @@ block main
                 id="title"
                 name="title"
                 required
+                value=song.title
             )
         div(class="form-group")
             labels(for="topic") Chủ đề
@@ -26,9 +27,12 @@ block main
                 required
             )
 
-                option(value="" disabled selected) -- Chọn chủ đề --
+                option(value="" disabled) -- Chọn chủ đề --
                 each item in topics
-                    option(value=item.id) #{item.title}
+                    option(
+                        value=item.id
+                        selected=(item.id == song.topicId ? true : false)
+                    ) #{item.title}
 
         div(class="form-group") 
             label(for="singer") Ca sĩ
@@ -40,7 +44,10 @@ block main
             )
                 option(value="" disabled selected) -- Chọn ca sĩ --
                 each item in singers
-                    option(value=item.id) #{item.fullName}
+                    option(
+                        value=item.id
+                        selected=(item.id == song.topicId ? true : false)
+                    ) #{item.fullName}
         div(
             class="form-group"
             upload-image
